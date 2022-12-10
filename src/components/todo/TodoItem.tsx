@@ -1,8 +1,10 @@
 import { useRef, useState } from "react";
-
 import { AiFillCheckCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import styled from "styled-components";
+
 import { todoAPI } from "../../shared/httpRequest";
+import { Todo } from "../../types/todoInterface";
+
 import Button from "../common/Button";
 import Input from "../common/Input";
 
@@ -11,12 +13,6 @@ type TodoProps = {
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
-
-interface Todo {
-  id: number;
-  todo: string;
-  isCompleted: boolean;
-}
 
 export default function TodoItem({ todo, todos, setTodos }: TodoProps) {
   const [value, setValue] = useState(todo.todo);

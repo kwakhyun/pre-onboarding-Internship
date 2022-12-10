@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+import { todoAPI } from "../../shared/httpRequest";
+import { Todo } from "../../types/todoInterface";
+
 import TodoForm from "../../components/todo/TodoForm";
 import TodoItem from "../../components/todo/TodoItem";
-import { todoAPI } from "../../shared/httpRequest";
-
-interface Todo {
-  id: number;
-  todo: string;
-  isCompleted: boolean;
-}
 
 export default function MainPage() {
   const [todos, setTodos] = useState<Todo[]>([]);

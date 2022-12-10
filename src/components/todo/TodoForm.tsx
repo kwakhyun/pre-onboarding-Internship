@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { todoAPI } from "../../shared/httpRequest";
 import styled from "styled-components";
+
+import { Todo } from "../../types/todoInterface";
+
 import Input from "../common/Input";
 import Button from "../common/Button";
 
@@ -8,12 +11,6 @@ type TodoFormProps = {
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
-
-interface Todo {
-  id: number;
-  todo: string;
-  isCompleted: boolean;
-}
 
 export default function TodoForm({ todos, setTodos }: TodoFormProps) {
   const [newTodo, setNewTodo] = useState("");
