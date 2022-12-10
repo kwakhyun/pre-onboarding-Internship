@@ -1,4 +1,4 @@
-import React, { ChangeEvent, forwardRef, memo, Ref } from "react";
+import { ChangeEvent, forwardRef, memo, Ref } from "react";
 import styled from "styled-components";
 
 type InputProps = {

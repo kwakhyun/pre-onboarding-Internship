@@ -1,11 +1,12 @@
 import { FormEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../../components/common/Button";
-import Input from "../../components/common/Input";
 
 import { authAPI } from "../../shared/httpRequest";
 import { emailRegExp } from "../../utils/regExp";
+
+import Button from "../../components/common/Button";
+import Input from "../../components/common/Input";
 
 export default function JoinPage() {
   const [email, setEmail] = useState("");
