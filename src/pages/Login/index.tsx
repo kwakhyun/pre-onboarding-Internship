@@ -49,6 +49,7 @@ export default function LoginPage() {
   return (
     <StyledLoginPage>
       <form onSubmit={(event) => handleLogin(event)}>
+        <img src="/logo.png" alt="logo" width="300px" height="169px" />
         <Input
           id="email"
           label="EMAIL"
@@ -57,7 +58,7 @@ export default function LoginPage() {
           onChange={(event) => setEmail(event.target.value)}
           placeholder="이메일 입력"
           required
-          margin="10px 0"
+          margin="5px 0 0 0"
         />
         <Input
           id="password"
@@ -67,13 +68,13 @@ export default function LoginPage() {
           onChange={(event) => setPassword(event.target.value)}
           placeholder="비밀번호 입력"
           required
-          margin="10px 0"
+          margin="5px 0 0 0"
         />
         <Button
           type="submit"
           disabled={!(emailRegExp.test(email) && password.length >= 8)}
           text="SIGN IN"
-          margin="20px 0 0 0"
+          margin="25px 0 0 0"
         />
       </form>
       <span onClick={() => navigate("/join")}>SIGN UP</span>
@@ -102,7 +103,7 @@ const StyledLoginPage = styled.div`
     align-items: center;
     justify-content: center;
     width: 300px;
-    height: 300px;
+    height: 450px;
     border: none;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);

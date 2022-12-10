@@ -52,6 +52,7 @@ export default function JoinPage() {
   return (
     <StyledJoinPage>
       <form onSubmit={(e) => handleJoin(e)}>
+        <img src="/logo.png" alt="logo" width="300px" height="169px" />
         <Input
           id="email"
           label="EMAIL"
@@ -127,7 +128,7 @@ const StyledJoinPage = styled.div`
     align-items: center;
     justify-content: center;
     width: 300px;
-    height: 350px;
+    height: 500px;
     border: none;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
