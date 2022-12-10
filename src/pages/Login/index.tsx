@@ -12,7 +12,10 @@ import Modal from "../../components/common/Modal";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [modal, setModal] = useState(false);
+
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
+  const [isFailed, setIsFailed] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,23 +27,24 @@ export default function LoginPage() {
 
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (emailRegExp.test(email)) {
-      authAPI
-        .signin(email, password)
-        .then((response) => {
-          if (response.status === 200) {
-            localStorage.setItem("token", response.data["access_token"]);
-            navigate("/todo");
-          }
-        })
-        .catch(({ response }) => {
-          if (response.data.statusCode === 401) {
-            setModal(true);
-          }
-        });
-    } else {
-      alert("이메일 형식에 맞지 않습니다");
-    }
+    authAPI
+      .signin(email, password)
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.setItem("token", response.data["access_token"]);
+          navigate("/todo");
+        }
+      })
+      .catch(({ response }) => {
+        const responseData = response.data;
+
+        responseData.statusCode === 401
+          ? setModalContent("이메일 또는 비밀번호가 일치하지 않습니다.")
+          : setModalContent(responseData.message);
+
+        setModalTitle("로그인 실패");
+        setIsFailed(true);
+      });
   };
   return (
     <StyledLoginPage>
@@ -73,11 +77,12 @@ export default function LoginPage() {
         />
       </form>
       <span onClick={() => navigate("/join")}>SIGN UP</span>
-      {modal && (
+
+      {isFailed && (
         <Modal
-          title="로그인 실패"
-          content="이메일 또는 비밀번호가 일치하지 않습니다."
-          onClick={() => setModal(false)}
+          title={modalTitle}
+          content={modalContent}
+          onClose={() => setIsFailed(false)}
         />
       )}
     </StyledLoginPage>

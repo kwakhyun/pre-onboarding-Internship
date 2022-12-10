@@ -7,11 +7,17 @@ import { emailRegExp } from "../../utils/regExp";
 
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
+import Modal from "../../components/common/Modal";
 
 export default function JoinPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
+
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -29,16 +35,16 @@ export default function JoinPage() {
       authAPI
         .signup(email, password)
         .then((response) => {
-          console.log(response);
           if (response.status === 201) {
-            alert("회원가입이 완료되었습니다.");
-            navigate("/");
+            setModalTitle("회원가입 성공");
+            setModalContent("회원가입이 완료되었습니다.");
+            setIsSuccess(true);
           }
         })
         .catch(({ response }) => {
-          if (response.status === 400) {
-            alert(response.data.message);
-          }
+          setModalTitle("회원가입 실패");
+          setModalContent(response.data.message);
+          setIsFailed(true);
         });
     }
   };
@@ -89,6 +95,21 @@ export default function JoinPage() {
         />
       </form>
       <span onClick={() => navigate("/")}>SIGN IN</span>
+
+      {isSuccess && (
+        <Modal
+          title={modalTitle}
+          content={modalContent}
+          onClose={() => navigate("/")}
+        />
+      )}
+      {isFailed && (
+        <Modal
+          title={modalTitle}
+          content={modalContent}
+          onClose={() => setIsFailed(false)}
+        />
+      )}
     </StyledJoinPage>
   );
 }
