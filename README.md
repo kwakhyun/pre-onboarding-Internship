@@ -1,5 +1,10 @@
 ## 원티드 프리온보딩 프론트엔드 인턴십 선발 과제
 
+### 프로젝트 배포
+
+- https://type-todo-list.vercel.app/
+  <br>
+
 ### 프로젝트 소개
 
 - CRA(Create React App)을 사용해 생성한 프로젝트입니다.
