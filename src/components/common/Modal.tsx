@@ -3,10 +3,10 @@ import styled from "styled-components";
 type ModalProps = {
   title: string;
   content: string;
-  onClick: () => void;
+  onClose: () => void;
 };
 
-export default function Modal({ title, content, onClick }: ModalProps) {
+export default function Modal({ title, content, onClose }: ModalProps) {
   return (
     <StyledModal>
       <div className="modal">
@@ -17,7 +17,7 @@ export default function Modal({ title, content, onClick }: ModalProps) {
           <p>{content}</p>
         </div>
         <div className="modal-footer">
-          <button onClick={onClick}>확인</button>
+          <button onClick={onClose}>확인</button>
         </div>
       </div>
     </StyledModal>
@@ -34,9 +34,10 @@ const StyledModal = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
   .modal {
     width: 400px;
-    height: 300px;
+    height: 200px;
     background-color: #fff;
     border-radius: 5px;
     display: flex;
@@ -44,10 +45,11 @@ const StyledModal = styled.div`
     align-items: center;
     justify-content: center;
     .modal-header {
+      width: 100%;
       height: 50px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       padding: 0 20px;
       margin-top: 5px;
       border-bottom: 1px solid #e5e5e5;
@@ -56,7 +58,8 @@ const StyledModal = styled.div`
       }
     }
     .modal-content {
-      height: 200px;
+      width: 100%;
+      height: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
