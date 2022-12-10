@@ -1,5 +1,10 @@
-const App = () => {
-  return <div></div>;
-};
+import { BrowserRouter } from "react-router-dom";
+import PageRouter from "./router";
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <PageRouter />
+    </BrowserRouter>
+  );
+}
