@@ -1,24 +1,24 @@
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { AiFillCheckCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import styled from "styled-components";
 
 import { todoAPI } from "../../shared/httpRequest";
-import { Todo } from "../../types/todoInterface";
+import { ITodo } from "../../types/todoInterface";
 
 import Button from "../common/Button";
 import Input from "../common/Input";
 
 type TodoProps = {
-  todo: Todo;
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  todo: ITodo;
+  todos: ITodo[];
+  setTodos: React.Dispatch<React.SetStateAction<ITodo[]>>;
 };
 
-export default function TodoItem({ todo, todos, setTodos }: TodoProps) {
+export default memo(function TodoItem({ todo, todos, setTodos }: TodoProps) {
   const [value, setValue] = useState(todo.todo);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
-
+  
   const input = useRef(null);
 
   const handleCompleteTodo = () => {
@@ -103,7 +103,7 @@ export default function TodoItem({ todo, todos, setTodos }: TodoProps) {
       </div>
     </StyledTodoItem>
   );
-}
+});
 
 const StyledTodoItem = styled.div`
   display: flex;

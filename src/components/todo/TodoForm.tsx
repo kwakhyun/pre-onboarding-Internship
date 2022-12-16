@@ -2,14 +2,14 @@ import { useState } from "react";
 import { todoAPI } from "../../shared/httpRequest";
 import styled from "styled-components";
 
-import { Todo } from "../../types/todoInterface";
+import { ITodo } from "../../types/todoInterface";
 
 import Input from "../common/Input";
 import Button from "../common/Button";
 
 type TodoFormProps = {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  todos: ITodo[];
+  setTodos: React.Dispatch<React.SetStateAction<ITodo[]>>;
 };
 
 export default function TodoForm({ todos, setTodos }: TodoFormProps) {

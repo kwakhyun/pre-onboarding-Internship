@@ -1,18 +1,9 @@
 import { api } from "./httpClient";
 
-interface authApiProps {
-  signup: (email: string, password: string) => Promise<any>;
-  signin: (email: string, password: string) => Promise<any>;
-}
+import { IAuthApiProps } from "../types/authInterface";
+import { ITodoApiProps } from "../types/todoInterface";
 
-interface todoApiProps {
-  createTodo: (todo: string) => Promise<any>;
-  getTodos: () => Promise<any>;
-  updateTodo: (id: number, todo: string, isCompleted: boolean) => Promise<any>;
-  deleteTodo: (id: number) => Promise<any>;
-}
-
-export const authAPI: authApiProps = {
+export const authAPI: IAuthApiProps = {
   signup: (email, password) => {
     return api.post("/auth/signup", { email, password });
   },
@@ -21,7 +12,7 @@ export const authAPI: authApiProps = {
   },
 };
 
-export const todoAPI: todoApiProps = {
+export const todoAPI: ITodoApiProps = {
   createTodo: (todo) => api.post("/todos", { todo }),
   getTodos: () => api.get("/todos"),
   updateTodo: (id, todo, isCompleted) =>
