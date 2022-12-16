@@ -21,14 +21,14 @@ export default function MainPage() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       handleGetTodos();
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, [navigate]);
 
