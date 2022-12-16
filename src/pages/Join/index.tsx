@@ -95,13 +95,13 @@ export default function JoinPage() {
           margin="20px 0 0 0"
         />
       </form>
-      <span onClick={() => navigate("/")}>SIGN IN</span>
+      <span onClick={() => navigate("/login")}>SIGN IN</span>
 
       {isSuccess && (
         <Modal
           title={modalTitle}
           content={modalContent}
-          onClose={() => navigate("/")}
+          onClose={() => navigate("/login")}
         />
       )}
       {isFailed && (

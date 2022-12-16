@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { todoAPI } from "../../shared/httpRequest";
-import { Todo } from "../../types/todoInterface";
+import { ITodo } from "../../types/todoInterface";
 
 import TodoForm from "../../components/todo/TodoForm";
 import TodoItem from "../../components/todo/TodoItem";
 
 export default function MainPage() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<ITodo[]>([]);
 
   const navigate = useNavigate();
 
@@ -21,14 +21,14 @@ export default function MainPage() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       handleGetTodos();
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, [navigate]);
 

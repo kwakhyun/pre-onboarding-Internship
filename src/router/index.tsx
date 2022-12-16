@@ -7,9 +7,9 @@ import MainPage from "../pages/Main";
 export default function PageRouter() {
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/join" element={<JoinPage />} />
-      <Route path="/todo" element={<MainPage />} />
+      <Route path="/main" element={<MainPage />} />
     </Routes>
   );
 }

@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      navigate("/todo");
+      navigate("/main");
     }
   }, [navigate]);
 
@@ -32,7 +32,7 @@ export default function LoginPage() {
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("token", response.data["access_token"]);
-          navigate("/todo");
+          navigate("/main");
         }
       })
       .catch(({ response }) => {
