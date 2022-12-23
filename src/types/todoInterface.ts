@@ -4,21 +4,21 @@ export interface ITodo {
   isCompleted: boolean;
 }
 
-type ITodoData = {
+type TodoData = {
   data: ITodo;
 };
 
-type ITodoList = {
+type TodoList = {
   data: ITodo[];
 };
 
 export interface ITodoApiProps {
-  createTodo: (todo: string) => Promise<ITodoData>;
-  getTodos: () => Promise<ITodoList>;
+  createTodo: (todo: string) => Promise<TodoData>;
+  getTodos: () => Promise<TodoList>;
   updateTodo: (
     id: number,
     todo: string,
     isCompleted: boolean
-  ) => Promise<ITodoData>;
-  deleteTodo: (id: number) => Promise<ITodoData>;
+  ) => Promise<TodoData>;
+  deleteTodo: (id: number) => Promise<TodoData>;
 }
