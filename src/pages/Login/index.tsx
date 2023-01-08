@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { AxiosError } from "axios";
 
 import { authAPI } from "../../shared/httpRequest";
 import { emailRegExp } from "../../utils/regExp";
@@ -25,26 +26,38 @@ export default function LoginPage() {
     }
   }, [navigate]);
 
-  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    authAPI
-      .signin(email, password)
-      .then((response) => {
-        if (response.status === 200) {
-          localStorage.setItem("token", response.data["access_token"]);
-          navigate("/main");
-        }
-      })
-      .catch(({ response }) => {
-        const responseData = response.data;
 
-        responseData.statusCode === 401
-          ? setModalContent("이메일 또는 비밀번호가 일치하지 않습니다.")
-          : setModalContent(responseData.message);
-
+    try {
+      const response = await authAPI.signin(email, password);
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data["access_token"]);
+        navigate("/main");
+      }
+    } catch (error) {
+      if ((error as AxiosError).response) {
+        const responseData = (error as AxiosError).response?.data as {
+          statusCode: number;
+          message: string;
+        };
+        setModalContent(
+          responseData.statusCode === 401
+            ? "이메일 또는 비밀번호가 일치하지 않습니다."
+            : responseData.message
+        );
         setModalTitle("로그인 실패");
         setIsFailed(true);
-      });
+      } else if ((error as AxiosError).request) {
+        setModalTitle("로그인 실패");
+        setModalContent("응답이 없습니다. 서버가 정상 작동하는지 확인하세요.");
+        setIsFailed(true);
+      } else {
+        setModalTitle("로그인 실패");
+        setModalContent("알 수 없는 오류가 발생했습니다.");
+        setIsFailed(true);
+      }
+    }
   };
   return (
     <StyledLoginPage>

@@ -1,6 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { AxiosError } from "axios";
 
 import { authAPI } from "../../shared/httpRequest";
 import { emailRegExp } from "../../utils/regExp";
@@ -26,26 +27,38 @@ export default function JoinPage() {
 
   const navigate = useNavigate();
 
-  const handleJoin = (event: FormEvent<HTMLFormElement>) => {
+  const handleJoin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (password !== confirmPassword && messageRef.current) {
       confirmPasswordRef.current?.focus();
       messageRef.current.style.display = "block";
-    } else {
-      authAPI
-        .signup(email, password)
-        .then((response) => {
-          if (response.status === 201) {
-            setModalTitle("회원가입 성공");
-            setModalContent("회원가입이 완료되었습니다.");
-            setIsSuccess(true);
-          }
-        })
-        .catch(({ response }) => {
-          setModalTitle("회원가입 실패");
-          setModalContent(response.data.message);
-          setIsFailed(true);
-        });
+      return;
+    }
+
+    try {
+      const response = await authAPI.signup(email, password);
+      if (response.status === 201) {
+        setModalTitle("회원가입 성공");
+        setModalContent("회원가입이 완료되었습니다.");
+        setIsSuccess(true);
+      }
+    } catch (error) {
+      if ((error as AxiosError).response) {
+        setModalTitle("회원가입 실패");
+        setModalContent(
+          ((error as AxiosError).response?.data as { message: string }).message
+        );
+        setIsFailed(true);
+      } else if ((error as AxiosError).request) {
+        setModalTitle("회원가입 실패");
+        setModalContent("응답이 없습니다. 서버가 정상 작동하는지 확인하세요.");
+        setIsFailed(true);
+      } else {
+        setModalTitle("회원가입 실패");
+        setModalContent("알 수 없는 오류가 발생했습니다.");
+        setIsFailed(true);
+      }
     }
   };
 
