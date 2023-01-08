@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { todoAPI } from "../../shared/httpRequest";
 import styled from "styled-components";
+import { AxiosError } from "axios";
 
+import { todoAPI } from "../../shared/httpRequest";
+import { handleError } from "../../shared/handleError";
 import { ITodo } from "../../types/todoInterface";
 
 import Input from "../common/Input";
@@ -15,11 +17,14 @@ type TodoFormProps = {
 export default function TodoForm({ todos, setTodos }: TodoFormProps) {
   const [newTodo, setNewTodo] = useState("");
 
-  const handleAddTodo = () => {
-    todoAPI.createTodo(newTodo.trim()).then((response) => {
+  const handleAddTodo = async () => {
+    try {
+      const response = await todoAPI.createTodo(newTodo.trim());
       setTodos([...todos, response.data]);
       setNewTodo("");
-    });
+    } catch (error) {
+      handleError(error as AxiosError);
+    }
   };
 
   return (
